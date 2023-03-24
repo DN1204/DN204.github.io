@@ -149,6 +149,109 @@
     
     
     <article
+  id="post-记一次搞笑的代码任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%90%9E%E7%AC%91%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BB%BB%E5%8A%A1/"
+    >记一次搞笑的代码任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%90%9E%E7%AC%91%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2023-03-24T06:37:33.000Z" itemprop="datePublished">2023-03-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="记一次搞笑的代码任务"><a href="#记一次搞笑的代码任务" class="headerlink" title="记一次搞笑的代码任务"></a>记一次搞笑的代码任务</h1><h2 id="故事起因"><a href="#故事起因" class="headerlink" title="故事起因"></a>故事起因</h2><p>某一天干活的时候，有一个功能是需要我去做一个字符串数组的合并，有最长的长度限制，然后把过短的字符串都合并起来，举个例子：</p>
+<blockquote>
+<p>有这样的一个数组，要求最大长度不超过5进行合并   [“11”,”1”,”22”,”333”,”444”,”5”,”6666”]</p>
+</blockquote>
+<blockquote>
+<p>我想变成这个样子   [‘11122’, ‘333’, ‘4445’, ‘6666’]</p>
+</blockquote>
+<p>仔细想想并不是一个很复杂的事情。但我当时并没有认真思考问题，只是简单的想了个思路就开始敲起来代码。</p>
+<h2 id="我的做法"><a href="#我的做法" class="headerlink" title="我的做法"></a>我的做法</h2><p>我的思路是避免循环次数过多，就利用索引来直接获取需要切分的部分,  然后一次性切分出来想要的结果。</p>
+<p>我的步骤：</p>
+<ol>
+<li><p>原始数组通过<code>|</code>拼接, 变成”11|1|22|333|444|5|6666”</p>
+</li>
+<li><p>获取所有<code>|</code>的索引, 遍历这个索引列表计算出真正想要切开的位置</p>
+</li>
+<li><p>最终遍历位置索引列表切开第一步生成的字符串</p>
+</li>
+</ol>
+<p>步骤不多，思路也比较清晰，可当时我在第二步耽误了很多时间，脑袋也绕成了浆糊，怎么都计算不对索引位置，又是上手画又是拿数据试，费半天劲才实现了这个功能。</p>
+<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><p>代码本身功能是正确的，函数写好我拿去做数据清洗，5w多条清洗完变成20w条，然后就因为加或者不加这个函数，时间差了近一个小时！领导来问了我两次数据跑完了吗，给我整的非常尴尬。。。</p>
+<h2 id="搞笑的问题解决方式"><a href="#搞笑的问题解决方式" class="headerlink" title="搞笑的问题解决方式"></a>搞笑的问题解决方式</h2><p>跑完数据赶紧发给领导，当时我想有时间就解决一下效率问题，但是那天很忙，没时间看。在下班前抽了个时间，将这个问题抛给了new bing和chatGPT，收集了结果。</p>
+<p>回家打开电脑，在看AI给出的代码前，我想着怎么也得一两小时才能搞定这个问题吧。结果看了一遍代码，我心里一惊，这我怎么没想到呢？跑了一遍代码，只呼卧槽，这事就解决了！连5分钟都没到，真是给自己蠢哭了。</p>
+<p>先上代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">concat_strings</span>(<span class="params">array</span>):</span><br><span class="line">  s = <span class="string">&quot;&quot;</span> <span class="comment"># empty string</span></span><br><span class="line">  l = [] <span class="comment"># empty list</span></span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> array: <span class="comment"># loop through each string in array</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(s) + <span class="built_in">len</span>(x) &lt;= <span class="number">5</span>: <span class="comment"># if s plus current string is within length limit</span></span><br><span class="line">      s += x <span class="comment"># append current string to s</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="comment"># otherwise</span></span><br><span class="line">      l.append(s) <span class="comment"># add s to l</span></span><br><span class="line">      s = x <span class="comment"># assign current string to s</span></span><br><span class="line">  <span class="keyword">if</span> s: <span class="comment"># if s is not empty</span></span><br><span class="line">      l.append(s) <span class="comment"># add s to l</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># example</span></span><br><span class="line">array = [<span class="string">&quot;11&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;22&quot;</span>,<span class="string">&quot;333&quot;</span>,<span class="string">&quot;444&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6666&quot;</span>]</span><br><span class="line">result = concat_strings(array)</span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment"># [&#x27;11122&#x27;, &#x27;333&#x27;, &#x27;4445&#x27;, &#x27;6666&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>上面没给出我自己写的代码就是因为和bing一比简直太垃圾了，没脸传上来。</p>
+<p>来看看bing给出的思路:</p>
+<ol>
+<li><p>设置一个临时变量来帮助比较长度</p>
+</li>
+<li><p>只遍历一次字符串数组，如果前后两个字符串长度加起来，还比限制的最大长度短，就都存在临时变量里，继续比较下一个</p>
+</li>
+<li><p>如果长度超过了，那就将上一个字符串直接保存，当前的继续下一次比较</p>
+</li>
+<li><p>上面只遍历一次数组，就把除最后一位外的字符串处理完了。接着来考虑数组末端的问题</p>
+</li>
+<li><p>根据上一步的判断，最后一位和前一位是否会拼在一起，两种情况下最终想要的结果都存在了s中，因此直接保存s即可</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li><p>bing给出的代码，肉眼可见的简洁高效，经过测试，效率是我自己实现的3倍！意味着我跑代码的时间将缩短到原来的1&#x2F;3！</p>
+</li>
+<li><p>看着原来写的冗杂代码，我像个小丑。</p>
+</li>
+<li><p>new bing是大模型结合了搜索引擎，比chatGPT不知道高到哪里去了，AI的作用日益凸显</p>
+</li>
+<li><p>以后查东西，百度谷歌可能真不如new bing了</p>
+</li>
+</ol>
+<p>    </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/str%E5%90%88%E5%B9%B6/" rel="tag">str合并</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-pandas常用函数"
   class="article article-type-post"
   itemscope
