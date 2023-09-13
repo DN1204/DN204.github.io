@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>提示词工程 |  W&amp;J</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-提示词工程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  提示词工程
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/13/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/" class="article-date">
+  <time datetime="2023-09-13T07:25:05.000Z" itemprop="datePublished">2023-09-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/nlp/">nlp</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="提示词工程"><a href="#提示词工程" class="headerlink" title="提示词工程"></a>提示词工程</h1><h2 id="一、Prompt介绍"><a href="#一、Prompt介绍" class="headerlink" title="一、Prompt介绍"></a>一、Prompt介绍</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>随着类ChatGPT的大型语言模型进一步发展，我们可以看到的是：它逐渐渗透到人们的日常生活和工作中，彻底改变了人类生活和工作的各个方面，似乎已成定局。其发展速度可能比互联网还要快。这对于整个人类生产生活方式来讲，将是非常深刻的一次变革。</p>
+<p>在现阶段，我们和ChatGPT、文心一言、Bard等大语言模型进行交互时，主要的还是利用提示词，掌握好提示词的用法，是我们有效利用AI工具提升我们工作学习效率的第一步。</p>
+<h3 id="什么是提示词"><a href="#什么是提示词" class="headerlink" title="什么是提示词"></a>什么是提示词</h3><p>Prompt（提示词）是用于与人工智能（AI）对话系统进行交互时提供的指导性文本。 Prompt 就像是一把引导对话的魔杖，它可以帮助我们更好地与AI进行交流。通过编写清晰、明确的提示词，我们能够准确表达自己的意图和问题，从而得到系统更精确的回答。Prompt 的好坏直接影响到对话的效果和用户体验，因此深入理解 Prompt 的重要性对于与AI进行有效的交流至关重要。</p>
+<h2 id="二、基本提示"><a href="#二、基本提示" class="headerlink" title="二、基本提示"></a>二、基本提示</h2><h3 id="最简单的Prompt"><a href="#最简单的Prompt" class="headerlink" title="最简单的Prompt"></a>最简单的Prompt</h3><blockquote>
+<p>输入：介绍苹果</p>
+<p>模型：关于苹果的介绍如下:</p>
+<ol>
+<li>起源<br>苹果是蔷薇科苹果属的果树及其果实的统称…….</li>
+</ol>
+<p>输入：介绍苹果公司</p>
+<p>模型：关于苹果公司的简单介绍如下:</p>
+<ol>
+<li>公司概况苹果公司(Apple Inc.)是一家美国跨国科技公司,总部位于美国加利福尼亚州……</li>
+</ol>
+</blockquote>
+<h3 id="Prompt元素"><a href="#Prompt元素" class="headerlink" title="Prompt元素"></a>Prompt元素</h3><p><strong>Instruction（必须）</strong>：指令，即你希望模型执行的具体任务</p>
+<p><strong>Capacity and Role（选填）</strong>：你希望模型扮演怎样的角色</p>
+<blockquote>
+<p>输入：你是一个有十年教学经验的优秀数学老师，请解释微积分的概念。</p>
+</blockquote>
+<p><strong>Context（选填）</strong>：背景信息，或者说是上下文信息，这可以引导模型做出更好的反应</p>
+<blockquote>
+<p>输入：&lt;对方的主要信息&gt;</p>
+<p>    写一封销售邮件，介绍我们的xxx产品，并且提及上述相关的信息来帮助阐述我们的产品。</p>
+</blockquote>
+<p><strong>Input Data（选填）</strong>：输入数据，告知模型需要处理的数据</p>
+<blockquote>
+<p>输入：&lt;需处理的内容&gt;</p>
+<p>请概括上述文章的主要内容。</p>
+</blockquote>
+<p><strong>Output Indicator（选填）</strong>：输出指示器，告知模型我们要输出的类型或格式</p>
+<blockquote>
+<p>输入：在最近的一次业务报告演示中，xxx公司的 CEO 强调了他们在过去财年中显著的增长。她分享了公司营收增长了15%，达到了5000万美元，利润率为12%（净利润为600万美元）。报告还展示了客户基础增长了20%，现在总共有10万名客户。此外，公司的运营费用增加了10%，达到了1000万美元，员工数量增加了25%，导致当前的员工人数为500人。</p>
+<p>将上述内容中的数据以表格形式列出。</p>
+</blockquote>
+<h3 id="万用公式"><a href="#万用公式" class="headerlink" title="万用公式"></a>万用公式</h3><p><strong>提示词万用公式&#x3D;明确任务或需求+限定范围或主题+指定格式或结构+确定语气或风格+指定关键信息或要素</strong></p>
+<p>一些高质量Prompt案例：</p>
+<p>担任产品经理：</p>
+<blockquote>
+<p>请确认我的以下请求:</p>
+<p>请您作为产品经理回复我。</p>
+<p>我将会提供一个主题，您将帮助我编写一份包括以下章节标题的PRD文档：主题、简介、问题陈述、目标与目的、用户故事、技术要求、收益、KPI指标、开发风险以及结论。</p>
+<p>我的需求是：做一个云服务产品的网站首页。</p>
+</blockquote>
+<p>担任网络安全专家：</p>
+<blockquote>
+<p>我想让你充当网络安全专家。</p>
+<p>我将提供一些关于如何存储和共享数据的具体信息，而你的工作就是想出保护这些数据免受恶意行为者攻击的策略。</p>
+<p>这可能包括建议加密方法、创建防火墙或实施将某些活动标记为可疑的策略。</p>
+<p>我的第一个请求是“我需要帮助为我的公司制定有效的网络安全战略。”</p>
+</blockquote>
+<p>担任网页设计顾问：</p>
+<blockquote>
+<p>我想让你担任网页设计顾问。</p>
+<p>我将为你提供与需要帮助设计或重新开发其网站的组织相关的详细信息，你的职责是建议最合适的界面和功能，以增强用户体验，同时满足公司的业务目标。</p>
+<p>你应该利用你在 UX&#x2F;UI 设计原则、编码语言、网站开发工具等方面的知识，以便为项目制定一个全面的计划。</p>
+<p>我的第一个请求是“我需要帮助创建一个销售xxx的电子商务网站”。</p>
+</blockquote>
+<p>请记住，<strong>具体的提示词构建需要根据具体的文本生成任务和上下文来灵活调整，以最佳地满足你的需求</strong>。试着思考你希望从模型中获取什么样的信息或文本，然后根据这些思考来构建具体而明确的提示词。</p>
+<h2 id="三、进阶技巧"><a href="#三、进阶技巧" class="headerlink" title="三、进阶技巧"></a>三、进阶技巧</h2><h3 id="提示词权重"><a href="#提示词权重" class="headerlink" title="提示词权重"></a>提示词权重</h3><p>提示词权重会影响模型的理解和侧重性，要提高提示词中某个词的权重，以下是一些可能的方法：</p>
+<p><strong>突出格式</strong>：通过使用大写、斜体、加粗或其他特殊的格式来强调关键词，使其在提示中更加显眼。例子：在你的提示中，将关键词”重要”以加粗形式写成”<strong>重要</strong>“。</p>
+<p><strong>使用引号或括号</strong>：在提示词周围添加引号或括号，以将其与其他文字区分开来，提高它的重要性。例子：在提示中，使用括号将关键词括起来，如”(重要)”。</p>
+<p><strong>重复关键词</strong>：在提示中多次重复关键词，以增加其在上下文中的存在感。例子：在提示中多次使用关键词，如”在你的写作中，重要是重要的关键”。</p>
+<p><strong>上下文提示</strong>：在提示中提供更多与关键词相关的上下文信息，以帮助模型理解关键词的重要性。例子：在提示中给出关键词的具体背景或说明，如”重要（在这个项目中，我们特别关注这一点）”。</p>
+<p><strong>使用限制词语</strong>：在提示中使用一些限制性词语，如”只考虑”、”特别关注”、”必须包括”等，以强调关键词的必要性。例子：在提示中使用限制性词语，如”在你的回答中，只考虑重要的因素”。</p>
+<p>当然，prompt应该尽可能地简洁明了，避免使用过多的修饰词或者复杂的句式。这样，可以减少模型的计算量，提高生成速度，也可以避免模型理解错误或者产生冗余的内容。</p>
+<h3 id="少样本"><a href="#少样本" class="headerlink" title="少样本"></a>少样本</h3><p>大语言模型具备强大的少样本学习能力，能够在很少的示例中完成各种自然语言处理任务。大语言模型的可扩展性是关键因素，它能够有效地学习到各种不同的自然语言处理任务，并取得出色的表现。少样本技术的主要优势在于，大大降低了对特定任务数据的需求，并减少了过度学习的风险。</p>
+<p>少样本Prompting被用作一种技术，以实现上下文学习，即在提示中提供演示以引导模型取得更好的表现。</p>
+<blockquote>
+<p>输入：“whatpu” 是一种生长在坦桑尼亚的小型毛茸茸的动物。</p>
+<p>使用 whatpu 这个词的一个例子是：我们在非洲旅行，看到了这些非常可爱的 whatpu。<br>“farduddle” 的意思是快速跳跃。</p>
+<p>使用 farduddle 这个词的一个例子是：</p>
+</blockquote>
+<blockquote>
+<p>模型：The excited puppy fardaddled around the yard, jumping and leaping with energetic joy.激动的小狗在院子里fardaddle着,充满活力的快乐地跳跃着。</p>
+</blockquote>
+<h3 id="思维链"><a href="#思维链" class="headerlink" title="思维链"></a>思维链</h3><p>思维链Prompt策略主要是为大模型提供一些示例，帮助完善原始问题并确保得到更准确和全面的答案。思维链 Prompt，是因为提示中包含了一些思路示例。它与X-shot提示技术不同，因为思维链提示的结构是为了引导模型具备批判性思维，并且旨在帮助大模型发现可能没有考虑到的新方法。</p>
+<p>该技术还引导LLMs输出其批判性推理。思维链Prompt的slogen是“让我们一步一步思考”，它通常附加在提示的末尾，研究结果表明这可以改善生成的结果。</p>
+<blockquote>
+<p>问题:小明有12个苹果，他又买了两袋苹果，每袋苹果有3个，问小明现在总共有几个苹果？</p>
+<p>答案:初始有12个苹果，买了两袋苹果，每袋苹果有3个，所以买了的苹果数量为2*3&#x3D;6个。总共苹果数为初始数量加上买了的数量，即12+6&#x3D;18个苹果。</p>
+<p>问题:小红有10个香蕉，他给了小明1个香蕉，又买了4个香蕉，问小红现在总共有几个香蕉。<br>请问答案是什么?</p>
+</blockquote>
+<blockquote>
+<p>小红现在总共有13个香蕉。<br>初始有10个香蕉，然后给了小明1个，所以剩下10-1&#x3D;9个香蕉，接着又买了4个香蕉，所以现在有9 +4&#x3D;13个香蕉。</p>
+</blockquote>
+<h3 id="自我批评"><a href="#自我批评" class="headerlink" title="自我批评"></a>自我批评</h3><p>Self-Criticism策略主要引导大模型评估其输出是否存在潜在的不准确之处或需要改进的地方。该策略可以确保大模型输出响应信息尽可能准确。它可以帮助用户调整提示并确定为什么他们没有得到符合预期的结果。此类Prompt的示例如下：</p>
+<blockquote>
+<p>“请重新审阅您的上述回复。您能发现存在的错误吗？ 如果存在，请找出这些错误并进行必要的编辑。”</p>
+</blockquote>
+<p>此示例指导大模型使用自我批评来调试其错误代码：</p>
+<blockquote>
+<p>“查看您刚刚生成的代码。目前它没有运行。您是否能够看到可以纠正的语法错误？ 如果是这样，请找出有问题的代码部分并重新生成它。”</p>
+</blockquote>
+<p>利用大模型的自我修复能力是一项不容忽视的Prompt工程技术。</p>
+<h3 id="迭代策略"><a href="#迭代策略" class="headerlink" title="迭代策略"></a>迭代策略</h3><p>迭代Prompt策略主要是根据初始提示的输出向大模型提供后续提示。具体地，根据初始输出，通过提出进一步的问题或根据每个连续的响应提出额外的请求来迭代结果。例如，考虑让大模型协助您为正在撰写的一本书创建大纲。 第一个提示可能是这样的：</p>
+<blockquote>
+<p>“我正在写一本关于时间旅行的书。我还没有确定一个具体的主题。请为该书生成5个建议的主题。对于每项主题，请提供标题和一段关于本书将涵盖的内容的描述。这本书将针对休闲读者。”</p>
+</blockquote>
+<p>假设生成的主题之一如下：</p>
+<blockquote>
+<p>标题：“时间悖论：探索时间旅行的复杂性”<br>描述：“时间悖论”深入研究了时间旅行悖论中令人费解的错综复杂，探索它们所呈现的迷人难题。 本书探讨了各种悖论，例如引导悖论、预定悖论和信息悖论等。 ……</p>
+</blockquote>
+<p>然后，您可以使用后续提示对此进行迭代：</p>
+<blockquote>
+<p>“我会按照《时间悖论：探索时间旅行的复杂性》这个标题进行写。请您帮忙生成本书的章节大纲，包括章节和小节”。</p>
+</blockquote>
+<p>可能的输出摘录如下：</p>
+<blockquote>
+<p>介绍<br>定义时间悖论<br>时间旅行叙事中时间悖论的意义<br>章节结构概述<br>第一章：Bootstrap 悖论<br>1.1 Bootstrap悖论的本质<br>解释概念及其起源<br>文学、电影和现实生活中的轶事的关键例子<br>……</p>
+</blockquote>
+<p>您可以看到在此示例中如何继续进一步迭代。 可以使用类似的迭代来让大模型生成代码：从概述开始，迭代概述以生成模块，在模块上生成以生成函数，最后在函数内生成代码。 正如将大问题分解为更小、更易于管理的问题通常是人类成功的方法一样，大模型擅长以更容易处理的方式完成更大的任务。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/09/13/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/prompt/" rel="tag">prompt</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2023/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%90%9E%E7%AC%91%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BB%BB%E5%8A%A1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">记一次搞笑的代码任务</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023
+        <i class="ri-heart-fill heart_icon"></i> J
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="W&amp;J"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+ 
+<script src="/js/clickLove.js"></script>
+ 
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
